@@ -9,17 +9,24 @@ If your site is deployed but CSS/JS isn't loading, follow these steps:
 ### 1. Prepare Your Local Files
 
 The following files have been created/updated for Railway:
-- ✅ `nixpacks.toml` - Railway build configuration
+- ✅ `nixpacks.toml` - Railway build configuration (fixed for Vite)
 - ✅ `vite.config.js` - Updated with build settings
+- ✅ `package.json` - Moved Vite to dependencies (critical!)
 - ✅ `.env.example` - Added ASSET_URL
 
-### 2. Build Assets Locally First
+**Important**: The `package.json` now has Vite in `dependencies` instead of `devDependencies`. This ensures Railway can build assets during deployment.
+
+### 2. Install Dependencies
 
 ```bash
-# Build production assets
+# Clean install to update package.json changes
+rm -rf node_modules package-lock.json
+npm install
+
+# Test build works locally
 npm run build
 
-# Verify public/build directory exists with files
+# Verify public/build directory exists with manifest.json
 ls public/build
 ```
 
@@ -110,6 +117,33 @@ php artisan migrate --force
 ```
 
 ## Troubleshooting
+
+### Error: "Vite manifest not found at: /app/public/build/manifest.json"
+
+**This means Vite isn't building during deployment. Solution:**
+
+1. **Verify package.json** - Vite must be in `dependencies`, not `devDependencies`
+   ```json
+   "dependencies": {
+     "vite": "^7.0.7",
+     "laravel-vite-plugin": "^2.0.0",
+     "@tailwindcss/vite": "^4.0.0"
+   }
+   ```
+
+2. **Check Railway build logs** - Look for `npm run build` output
+   - If you see "vite: command not found" → Vite is in wrong place
+   - If build runs but fails → Check for syntax errors
+
+3. **Rebuild dependencies locally**
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   npm run build
+   git add .
+   git commit -m "Fix Vite dependencies for Railway"
+   git push
+   ```
 
 ### Assets Still Not Loading?
 
