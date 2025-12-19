@@ -4,12 +4,14 @@ nixPkgs = ['nodejs_22', 'php83', 'php83Packages.composer']
 [phases.install]
 cmds = [
     'composer install --optimize-autoloader --no-dev --no-scripts --no-interaction',
-    'npm ci --include=dev'
+    'npm ci'
 ]
 
 [phases.build]
 cmds = [
-    'npm run build',
+    'chmod -R +x node_modules/.bin',
+    'node node_modules/vite/bin/vite.js build',
+    'npm prune --omit=dev',
     'mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache',
     'chmod -R 777 storage bootstrap/cache',
     'php artisan config:cache',
