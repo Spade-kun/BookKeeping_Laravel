@@ -55,7 +55,7 @@
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <!-- Logo -->
-                <a href="{{ route('home') }}" class="flex items-center hover:opacity-80 transition">
+                <a href="/" class="flex items-center hover:opacity-80 transition">
                     <img src="{{ asset('images/EverlyLogo.jpeg') }}" alt="Everly BookKeeping Logo" class="w-11 h-11 rounded-full object-cover header-logo">
                     <span class="text-xl font-bold text-white header-text ml-4">Everly</span>
                 </a>

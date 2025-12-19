@@ -21,8 +21,13 @@ export default defineConfig({
     },
 
     build: {
-        manifest: true,
+        manifest: 'manifest.json',
         outDir: 'public/build',
-        assetsDir: '', // ⭐ THIS FIXES THE ISSUE
+        assetsDir: '',
+        rollupOptions: {
+            output: {
+                manualChunks: undefined,
+            }
+        }
     },
 });

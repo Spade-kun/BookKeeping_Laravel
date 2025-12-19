@@ -24,7 +24,7 @@
 <x-section 
     title="Why Choose Professional Bookkeeping?"
     subtitle="Focus on growing your business while we handle your finances"
-    background="bg-[#F7FAFC]">
+    background="bg-[#F7FAFC] text-[#003366]">
     <div class="grid md:grid-cols-3 gap-8 stagger-container">
         <div class="stagger-item">
             <x-card 
@@ -67,7 +67,8 @@
 <!-- Who It's For Section -->
 <x-section 
     title="Built for Modern Businesses"
-    subtitle="Whether you're just starting or scaling up">
+    subtitle="Whether you're just starting or scaling up"
+    background="bg-white text-[#003366]">
     <div class="grid md:grid-cols-3 gap-8 stagger-container">
         <div class="stagger-item text-center">
             <div class="bg-[#E6F2FF] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -106,22 +107,22 @@
     title="The BookKeep Advantage"
     background="bg-[#002147] text-white">
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-container">
-        <div class="stagger-item">
+        <div class="stagger-item text-center">
             <div class="text-4xl font-bold mb-2">99.9%</div>
             <p class="text-blue-200">Accuracy Rate</p>
         </div>
         
-        <div class="stagger-item">
+        <div class="stagger-item text-center">
             <div class="text-4xl font-bold mb-2">24/7</div>
             <p class="text-blue-200">Access to Your Data</p>
         </div>
         
-        <div class="stagger-item">
+        <div class="stagger-item text-center">
             <div class="text-4xl font-bold mb-2">< 24hr</div>
             <p class="text-blue-200">Response Time</p>
         </div>
         
-        <div class="stagger-item">
+        <div class="stagger-item text-center">
             <div class="text-4xl font-bold mb-2">500+</div>
             <p class="text-blue-200">Happy Clients</p>
         </div>
@@ -132,7 +133,7 @@
 <x-section 
     title="Simple, Transparent Process"
     subtitle="Get started in minutes, not days"
-    background="bg-[#F7FAFC]">
+    background="bg-[#F7FAFC] text-[#003366]">
     <div class="grid md:grid-cols-3 gap-8 stagger-container">
         <div class="stagger-item">
             <div class="bg-white rounded-lg p-8 text-center shadow-md">
