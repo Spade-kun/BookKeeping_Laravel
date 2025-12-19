@@ -78,20 +78,20 @@
         </div>
     </div>
 
-    <p class="text-center text-gray-600 mt-8">All plans include secure data storage, bank-level encryption, and 24/7 dashboard access.</p>
+    <p class="text-center text-[#4A5568] mt-8">All plans include secure data storage, bank-level encryption, and 24/7 dashboard access.</p>
 </x-section>
 
 <!-- Comparison Table Section -->
 <x-section 
     title="Compare Plans"
-    background="bg-gray-50">
+    background="bg-[#F7FAFC]">
     <div class="max-w-5xl mx-auto overflow-x-auto">
         <table class="w-full bg-white rounded-lg shadow-md">
             <thead>
                 <tr class="border-b">
                     <th class="text-left p-4 font-bold">Features</th>
                     <th class="text-center p-4 font-bold">Starter</th>
-                    <th class="text-center p-4 font-bold bg-gray-50">Professional</th>
+                    <th class="text-center p-4 font-bold bg-[#F7FAFC]">Professional</th>
                     <th class="text-center p-4 font-bold">Enterprise</th>
                 </tr>
             </thead>
@@ -99,23 +99,23 @@
                 <tr>
                     <td class="p-4">Monthly Transactions</td>
                     <td class="text-center p-4">Up to 50</td>
-                    <td class="text-center p-4 bg-gray-50">Up to 200</td>
+                    <td class="text-center p-4 bg-[#F7FAFC]">Up to 200</td>
                     <td class="text-center p-4">Unlimited</td>
                 </tr>
                 <tr>
                     <td class="p-4">Bank Reconciliation</td>
                     <td class="text-center p-4">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
-                    <td class="text-center p-4 bg-gray-50">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <td class="text-center p-4 bg-[#F7FAFC]">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
                     <td class="text-center p-4">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
@@ -123,19 +123,19 @@
                 <tr>
                     <td class="p-4">Financial Reports</td>
                     <td class="text-center p-4">Monthly</td>
-                    <td class="text-center p-4 bg-gray-50">Weekly</td>
+                    <td class="text-center p-4 bg-[#F7FAFC]">Weekly</td>
                     <td class="text-center p-4">Real-time</td>
                 </tr>
                 <tr>
                     <td class="p-4">Accounts Payable/Receivable</td>
                     <td class="text-center p-4">-</td>
-                    <td class="text-center p-4 bg-gray-50">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <td class="text-center p-4 bg-[#F7FAFC]">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
                     <td class="text-center p-4">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
@@ -143,13 +143,13 @@
                 <tr>
                     <td class="p-4">Payroll Support</td>
                     <td class="text-center p-4">-</td>
-                    <td class="text-center p-4 bg-gray-50">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <td class="text-center p-4 bg-[#F7FAFC]">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
                     <td class="text-center p-4">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
@@ -157,9 +157,9 @@
                 <tr>
                     <td class="p-4">Dedicated Team</td>
                     <td class="text-center p-4">-</td>
-                    <td class="text-center p-4 bg-gray-50">-</td>
+                    <td class="text-center p-4 bg-[#F7FAFC]">-</td>
                     <td class="text-center p-4">
-                        <svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-[#0066CC] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </td>
@@ -167,7 +167,7 @@
                 <tr>
                     <td class="p-4">Support Response Time</td>
                     <td class="text-center p-4">48 hours</td>
-                    <td class="text-center p-4 bg-gray-50">24 hours</td>
+                    <td class="text-center p-4 bg-[#F7FAFC]">24 hours</td>
                     <td class="text-center p-4">Priority</td>
                 </tr>
             </tbody>
@@ -186,7 +186,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <div x-show="open" x-collapse class="mt-4 text-gray-600">
+            <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
                 We'll notify you before you reach your limit. You can either upgrade your plan or pay a small per-transaction fee for additional transactions.
             </div>
         </div>
@@ -198,7 +198,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <div x-show="open" x-collapse class="mt-4 text-gray-600">
+            <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
                 Yes, absolutely. We offer month-to-month billing with no long-term contracts. Cancel anytime with 30 days notice.
             </div>
         </div>
@@ -210,7 +210,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <div x-show="open" x-collapse class="mt-4 text-gray-600">
+            <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
                 Yes, we work with larger organizations to create custom packages. Contact our sales team to discuss your specific needs.
             </div>
         </div>
@@ -222,7 +222,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <div x-show="open" x-collapse class="mt-4 text-gray-600">
+            <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
                 No, we don't charge any setup or onboarding fees. Your first month includes full setup and historical data review.
             </div>
         </div>
@@ -234,7 +234,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <div x-show="open" x-collapse class="mt-4 text-gray-600">
+            <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
                 We integrate with QuickBooks Online, Xero, FreshBooks, and most major accounting platforms. We can also set up a new system for you.
             </div>
         </div>
@@ -243,11 +243,11 @@
 
 <!-- CTA Section -->
 <x-section 
-    background="bg-black text-white"
+    background="bg-[#002147] text-white"
     padding="py-20">
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Get Started?</h2>
-        <p class="text-xl mb-8 text-gray-400">Start with a free consultation. No credit card required.</p>
+        <p class="text-xl mb-8 text-blue-200">Start with a free consultation. No credit card required.</p>
         <x-button href="{{ route('contact') }}" variant="secondary" size="lg">
             Schedule Free Consultation
         </x-button>

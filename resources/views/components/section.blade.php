@@ -10,9 +10,9 @@
     <div class="max-w-7xl mx-auto px-6">
         @if($title)
             <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">{{ $title }}</h2>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#003366]">{{ $title }}</h2>
                 @if($subtitle)
-                    <p class="text-xl text-gray-600">{{ $subtitle }}</p>
+                    <p class="text-xl text-[#4A5568]">{{ $subtitle }}</p>
                 @endif
             </div>
         @endif

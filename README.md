@@ -1,6 +1,6 @@
-# BookKeep - Tesla-Inspired Bookkeeping Website
+# Everly BookKeeping - Tesla-Inspired Everly BookKeepinging Website
 
-A modern, high-performance Laravel web application for a professional bookkeeping business. Built with Tesla.com-inspired design patterns, featuring smooth animations, clean layouts, and exceptional user experience.
+A modern, high-performance Laravel web application for a professional Everly BookKeepinging business. Built with Tesla.com-inspired design patterns, featuring smooth animations, clean layouts, and exceptional user experience.
 
 ## 🚀 Features
 

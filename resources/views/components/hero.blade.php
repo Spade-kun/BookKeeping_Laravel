@@ -4,17 +4,22 @@
     'backgroundImage' => null,
     'backgroundVideo' => null,
     'height' => 'min-h-screen',
-    'align' => 'center'
+    'align' => 'center',
+    'priority' => false
 ])
 
 <section class="relative {{ $height }} flex items-{{ $align }} justify-center overflow-hidden">
     <!-- Background Media -->
     @if($backgroundVideo)
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" preload="auto">
             <source src="{{ $backgroundVideo }}" type="video/mp4">
         </video>
     @elseif($backgroundImage)
-        <img src="{{ $backgroundImage }}" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+        <img src="{{ $backgroundImage }}" 
+             alt="Hero background" 
+             class="absolute inset-0 w-full h-full object-cover" 
+             loading="{{ $priority ? 'eager' : 'lazy' }}"
+             fetchpriority="{{ $priority ? 'high' : 'auto' }}">
     @else
         <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800"></div>
     @endif
