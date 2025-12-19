@@ -4,8 +4,7 @@ nixPkgs = ['nodejs_22', 'php83', 'php83Packages.composer']
 [phases.install]
 cmds = [
     'composer install --optimize-autoloader --no-dev --no-scripts --no-interaction',
-    'npm ci',
-    'chmod -R +x node_modules/.bin'
+    'npm ci --include=dev'
 ]
 
 [phases.build]
