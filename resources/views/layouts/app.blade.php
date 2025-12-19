@@ -70,8 +70,8 @@
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <a href="/" class="flex items-center hover:opacity-80 transition">
-                    <img src="{{ asset('images/EverlyLogo.jpeg') }}" alt="Everly BookKeeping Logo" class="w-11 h-11 rounded-full object-cover header-logo">
-                    <span class="text-xl font-bold text-white header-text ml-4">Everly</span>
+                    <img src="{{ asset('images/EverlyLogo.jpeg') }}" alt="Everly Bookkeeping Logo" class="w-14 h-14 rounded-full object-cover header-logo">
+                    <span class="text-2xl font-bold text-white header-text ml-4">Everly Bookkeeping</span>
                 </a>
                 
                 <!-- Desktop Navigation -->
@@ -143,7 +143,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Everly BookKeeping</h3>
+                    <h3 class="text-xl font-bold mb-4">Everly Bookkeeping</h3>
                     <p class="text-white text-sm opacity-90">Professional Bookkeeping Services for modern businesses.</p>
                 </div>
                 
@@ -179,7 +179,7 @@
             </div>
             
             <div class="border-t border-blue-900 mt-8 pt-8 text-center text-sm text-white opacity-70">
-                <p>&copy; {{ date('Y') }} Everly BookKeeping. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} Everly Bookkeeping. All rights reserved.</p>
             </div>
         </div>
     </footer>

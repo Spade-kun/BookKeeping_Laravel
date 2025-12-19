@@ -20,15 +20,22 @@
         <!-- Starter Plan -->
         <div class="stagger-item">
             <x-pricing-card
-                title="Starter"
+                title="START UP"
                 price="299"
                 :features="[
-                    'Up to 50 monthly transactions',
-                    'Monthly financial reports',
-                    'Bank reconciliation',
-                    'Expense categorization',
-                    'Email support',
-                    'Quarterly reviews'
+                    '50 Transactions',
+                    'Reports: Monthly',
+                    'Reconciliation: 2 Accounts',
+                    'Expense Categorization: Included',
+                    'Support: Email',
+                    'Reviews: Quarterly',
+                    'AR/AP: Extra',
+                    'Payroll: Extra',
+                    'Tax Prep: Extra',
+                    'Dedicated Bookkeeper: Extra',
+                    'Financial Analysis: Extra',
+                    'KPI Snapshot: Extra',
+                    'Setup Cost: $350'
                 ]"
                 ctaText="Get Started"
                 :ctaLink="route('contact')"
@@ -38,17 +45,22 @@
         <!-- Professional Plan (Highlighted) -->
         <div class="stagger-item">
             <x-pricing-card
-                title="Professional"
+                title="PRO"
                 price="599"
                 :features="[
-                    'Up to 200 monthly transactions',
-                    'Weekly financial reports',
-                    'Full account reconciliation',
-                    'Accounts payable/receivable',
-                    'Priority support',
-                    'Monthly business reviews',
-                    'Payroll assistance',
-                    'Tax preparation support'
+                    '200 Transactions',
+                    'Reports: Weekly + Monthly',
+                    'Reconciliation: 4 Accounts',
+                    'Expense Categorization: Included',
+                    'Support: Priority',
+                    'Reviews: Monthly',
+                    'AR/AP: Included',
+                    'Payroll: Extra',
+                    'Tax Prep: Extra',
+                    'Dedicated Bookkeeper: Extra',
+                    'Financial Analysis: Extra',
+                    'KPI Snapshot: Extra',
+                    'Setup Cost: $500'
                 ]"
                 :highlighted="true"
                 ctaText="Get Started"
@@ -59,18 +71,22 @@
         <!-- Enterprise Plan -->
         <div class="stagger-item">
             <x-pricing-card
-                title="Enterprise"
+                title="ENTERPRISE"
                 price="999"
                 :features="[
-                    'Unlimited transactions',
-                    'Real-time reporting',
-                    'Dedicated bookkeeping team',
-                    'Custom financial analysis',
-                    '24/7 priority support',
-                    'Weekly business reviews',
-                    'Multi-entity support',
-                    'CFO-level insights',
-                    'Custom integrations'
+                    '500 Transactions',
+                    'Reports: Weekly + Monthly + YTD',
+                    'Reconciliation: 6 Accounts',
+                    'Expense Categorization: Included',
+                    'Support: 24/7 Priority Support',
+                    'Reviews: Weekly',
+                    'AR/AP: Included',
+                    'Payroll: Included',
+                    'Tax Prep: Included',
+                    'Dedicated Bookkeeper: Included',
+                    'Financial Analysis: Included',
+                    'KPI Snapshot: Included',
+                    'Setup Cost: $750'
                 ]"
                 ctaText="Contact Sales"
                 :ctaLink="route('contact')"
@@ -212,18 +228,6 @@
             </button>
             <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
                 Yes, we work with larger organizations to create custom packages. Contact our sales team to discuss your specific needs.
-            </div>
-        </div>
-
-        <div class="bg-white border rounded-lg p-6 animate-section" x-data="{ open: false }">
-            <button @click="open = !open" class="w-full flex items-center justify-between text-left">
-                <h3 class="text-lg font-bold">Is there a setup fee?</h3>
-                <svg class="w-6 h-6 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-            <div x-show="open" x-collapse class="mt-4 text-[#4A5568]">
-                No, we don't charge any setup or onboarding fees. Your first month includes full setup and historical data review.
             </div>
         </div>
 

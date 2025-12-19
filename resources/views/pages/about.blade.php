@@ -72,7 +72,7 @@
     <div class="max-w-3xl mx-auto">
         <div class="prose prose-lg max-w-none">
             <p class="text-[#1a2332] leading-relaxed mb-4">
-                BookKeep was founded by a team of certified accountants and technology professionals 
+                The Everly Bookkeeping was founded by a team of certified accountants and technology professionals 
                 who saw firsthand how traditional bookkeeping practices were failing modern businesses. 
                 Small business owners were either spending countless hours managing their own books or 
                 paying excessive fees for services that lacked transparency.
@@ -160,7 +160,7 @@
     padding="py-20">
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Let's Work Together</h2>
-        <p class="text-xl mb-8 text-blue-100">Discover how BookKeep can transform your business finances.</p>
+        <p class="text-xl mb-8 text-blue-100">Discover how Everly Bookkeeping can transform your business finances.</p>
         <x-button href="{{ route('contact') }}" variant="secondary" size="lg">
             Get in Touch
         </x-button>
