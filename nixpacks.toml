@@ -12,6 +12,8 @@ cmds = [
     'chmod -R +x node_modules/.bin',
     'node node_modules/vite/bin/vite.js build',
     'npm prune --omit=dev',
+    'npm install',
+    'npm run build',
     'mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache',
     'chmod -R 777 storage bootstrap/cache',
     'php artisan config:cache',

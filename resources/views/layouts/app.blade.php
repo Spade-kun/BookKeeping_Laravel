@@ -45,9 +45,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Vite Assets -->
-    @if(app()->environment('local') && env('VITE_DEV_SERVER_ENABLED', false))
+    @if(env('VITE_DEV_SERVER_ENABLED', true))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @elseif(file_exists(public_path('build/manifest.json')))
+    @else
         @php
             $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
             $cssFile = $manifest['resources/css/app.css']['file'] ?? '';
@@ -57,10 +57,8 @@
             <link rel="stylesheet" href="{{ asset('build/' . $cssFile) }}">
         @endif
         @if($jsFile)
-            <script type="module" src="{{ asset('build/' . $jsFile) }}"></script>
+            <script type="module" src="{{ asset('build/' . $jsFile) }}" defer></script>
         @endif
-    @else
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
     
     @stack('styles')
