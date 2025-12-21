@@ -11,9 +11,15 @@
     backgroundImage="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=80"
     :priority="true">
     <x-slot:cta>
-        <x-button href="{{ route('contact') }}" size="lg">
-            Get Started Today
-        </x-button>
+        @guest
+            <x-button href="{{ route('login') }}" size="lg">
+                Get Started Today
+            </x-button>
+        @else
+            <x-button href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" size="lg">
+                Go to Dashboard
+            </x-button>
+        @endguest
         <x-button href="{{ route('services') }}" variant="secondary" size="lg" class="ml-4">
             Learn More
         </x-button>
@@ -175,9 +181,15 @@
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Finances?</h2>
         <p class="text-xl mb-8 text-blue-100">Join hundreds of businesses that trust BookKeep with their financial management.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <x-button href="{{ route('contact') }}" variant="secondary" size="lg">
-                Start Free Consultation
-            </x-button>
+            @guest
+                <x-button href="{{ route('login') }}" variant="secondary" size="lg">
+                    Start Free Consultation
+                </x-button>
+            @else
+                <x-button href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" variant="secondary" size="lg">
+                    Go to Dashboard
+                </x-button>
+            @endguest
             <x-button href="{{ route('pricing') }}" variant="primary" size="lg">
                 View Pricing
             </x-button>

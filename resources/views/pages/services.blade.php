@@ -178,9 +178,15 @@
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Get Started?</h2>
         <p class="text-xl mb-8 text-blue-200">Let's discuss how our bookkeeping services can support your business.</p>
-        <x-button href="{{ route('contact') }}" variant="secondary" size="lg">
-            Schedule Free Consultation
-        </x-button>
+        @guest
+            <x-button href="{{ route('login') }}" variant="secondary" size="lg">
+                Schedule Free Consultation
+            </x-button>
+        @else
+            <x-button :href="auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard')" variant="secondary" size="lg">
+                Go to Dashboard
+            </x-button>
+        @endguest
     </div>
 </x-section>
 @endsection

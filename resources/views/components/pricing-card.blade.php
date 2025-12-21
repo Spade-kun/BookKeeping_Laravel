@@ -5,7 +5,8 @@
     'features' => [],
     'highlighted' => false,
     'ctaText' => 'Get Started',
-    'ctaLink' => '#'
+    'ctaLink' => '#',
+    'useAuthModal' => false
 ])
 
 <div class="bg-white rounded-2xl p-8 border {{ $highlighted ? 'ring-4 ring-[#0066CC] shadow-2xl transform scale-105 border-[#0066CC]' : 'shadow-lg border-[#E2E8F0]' }} hover-card">
@@ -33,7 +34,19 @@
         @endforeach
     </ul>
     
-    <x-button :href="$ctaLink" variant="{{ $highlighted ? 'primary' : 'secondary' }}" class="w-full">
-        {{ $ctaText }}
-    </x-button>
+    @if($ctaText === 'Get Started' || $useAuthModal)
+        @guest
+            <x-button href="{{ route('login') }}" variant="{{ $highlighted ? 'primary' : 'secondary' }}" class="w-full">
+                {{ $ctaText }}
+            </x-button>
+        @else
+            <x-button :href="auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard')" variant="{{ $highlighted ? 'primary' : 'secondary' }}" class="w-full">
+                Go to Dashboard
+            </x-button>
+        @endguest
+    @else
+        <x-button :href="$ctaLink" variant="{{ $highlighted ? 'primary' : 'secondary' }}" class="w-full">
+            {{ $ctaText }}
+        </x-button>
+    @endif
 </div>

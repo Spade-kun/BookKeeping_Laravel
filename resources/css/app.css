@@ -108,6 +108,13 @@ header.scrolled .header-nav {
     color: var(--brand-blue-dark) !important;
 }
 
+/* Login page logo - bigger and with blue outline */
+.login-logo {
+    width: 4.5rem !important;
+    height: 4.5rem !important;
+    border: 3px solid var(--brand-blue) !important;
+}
+
 header.scrolled .header-cta {
     background-color: var(--brand-blue);
     color: white !important;

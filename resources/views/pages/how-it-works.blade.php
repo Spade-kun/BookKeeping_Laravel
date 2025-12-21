@@ -220,9 +220,15 @@
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Get Started?</h2>
         <p class="text-xl mb-8 text-blue-100">Join hundreds of businesses that have streamlined their finances with BookKeep.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <x-button href="{{ route('contact') }}" variant="secondary" size="lg">
-                Schedule Free Consultation
-            </x-button>
+            @guest
+                <x-button href="{{ route('login') }}" variant="secondary" size="lg">
+                    Schedule Free Consultation
+                </x-button>
+            @else
+                <x-button :href="auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard')" variant="secondary" size="lg">
+                    Go to Dashboard
+                </x-button>
+            @endguest
             <x-button href="{{ route('pricing') }}" variant="primary" size="lg">
                 View Pricing
             </x-button>

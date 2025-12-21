@@ -3,8 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "dev": "node node_modules/vite/bin/vite.js",
         "build": "node node_modules/vite/bin/vite.js build",
-        "dev": "node node_modules/vite/bin/vite.js"
+        "serve": "concurrently \"php artisan serve\" \"npm run dev\" --names \"Laravel,Vite\" --prefix-colors \"blue,green\""
     },
     "devDependencies": {
         "axios": "^1.11.0",

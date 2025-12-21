@@ -65,13 +65,13 @@
 </head>
 <body class="antialiased">
     <!-- Header -->
-    <header class="fixed w-full top-0 z-50 bg-transparent transition-all duration-300" x-data="{ mobileMenuOpen: false, servicesDropdown: false }">
+    <header class="fixed w-full top-0 z-50 {{ request()->routeIs('login') ? 'bg-[#003366] shadow-lg' : 'bg-transparent' }} transition-all duration-300" x-data="{ mobileMenuOpen: false, servicesDropdown: false }">
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <a href="/" class="flex items-center hover:opacity-80 transition">
                     <img src="{{ asset('images/EverlyLogo.jpeg') }}" alt="Everly Bookkeeping Logo" class="w-14 h-14 rounded-full object-cover header-logo">
-                    <span class="text-2xl font-bold text-white header-text ml-4">Everly Bookkeeping</span>
+                    <span class="text-2xl font-bold header-text ml-4 {{ request()->routeIs('login') ? 'text-white' : 'header-text' }} ml-4">Everly Bookkeeping</span>
                 </a>
                 
                 <!-- Desktop Navigation -->
@@ -88,12 +88,19 @@
                     <a href="{{ route('about') }}" class="text-sm font-medium header-nav hover:opacity-80 transition">
                         About
                     </a>
+                
                     <a href="{{ route('contact') }}" class="text-sm font-medium header-nav hover:opacity-80 transition">
                         Contact
                     </a>
-                    <a href="{{ route('contact') }}" class="bg-white text-[#0066CC] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#F0F7FF] transition header-cta">
-                        Get Started
-                    </a>
+                    @guest
+                        <a href="{{ route('login') }}" class="bg-white text-[#0066CC] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#F0F7FF] transition header-cta">
+                            Get Started
+                        </a>
+                    @else
+                        <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" class="bg-white text-[#0066CC] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#F0F7FF] transition header-cta">
+                            Dashboard
+                        </a>
+                    @endguest
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -121,7 +128,11 @@
                     <a href="{{ route('pricing') }}" class="text-lg font-medium text-[#003366] hover:text-[#0066CC]">Pricing</a>
                     <a href="{{ route('about') }}" class="text-lg font-medium text-[#003366] hover:text-[#0066CC]">About</a>
                     <a href="{{ route('contact') }}" class="text-lg font-medium text-[#003366] hover:text-[#0066CC]">Contact</a>
-                    <a href="{{ route('contact') }}" class="btn-primary bg-[#0066CC] text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-[#0055B8]">Get Started</a>
+                    @guest
+                        <a href="{{ route('login') }}" class="btn-primary bg-[#0066CC] text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-[#0055B8]">Get Started</a>
+                    @else
+                        <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" class="btn-primary bg-[#0066CC] text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-[#0055B8]">Dashboard</a>
+                    @endguest
                 </div>
                 <button @click="mobileMenuOpen = false" class="absolute top-6 right-6 text-[#003366]">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
