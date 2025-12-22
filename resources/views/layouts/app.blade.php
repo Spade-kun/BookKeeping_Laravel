@@ -65,13 +65,13 @@
 </head>
 <body class="antialiased">
     <!-- Header -->
-    <header class="fixed w-full top-0 z-50 {{ request()->routeIs('login') ? 'bg-[#003366] shadow-lg' : 'bg-transparent' }} transition-all duration-300" x-data="{ mobileMenuOpen: false, servicesDropdown: false }">
+    <header class="fixed w-full top-0 z-50 {{ request()->routeIs('login') || request()->routeIs('register') ? 'bg-[#003366] shadow-lg' : 'bg-transparent' }} transition-all duration-300" x-data="{ mobileMenuOpen: false, servicesDropdown: false }">
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <a href="/" class="flex items-center hover:opacity-80 transition">
                     <img src="{{ asset('images/EverlyLogo.jpeg') }}" alt="Everly Bookkeeping Logo" class="w-14 h-14 rounded-full object-cover header-logo">
-                    <span class="text-2xl font-bold header-text ml-4 {{ request()->routeIs('login') ? 'text-white' : 'header-text' }} ml-4">Everly Bookkeeping</span>
+                    <span class="text-2xl font-bold header-text ml-4 {{ request()->routeIs('login') || request()->routeIs('register') ? 'text-white' : 'header-text' }} ml-4">Everly Bookkeeping</span>
                 </a>
                 
                 <!-- Desktop Navigation -->

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Sign In - Everly BookKeeping')
-@section('description', 'Sign in to your Everly BookKeeping account with Google to access your personalized dashboard and manage your bookkeeping documents.')
+@section('title', 'Sign Up - Everly BookKeeping')
+@section('description', 'Create your Everly BookKeeping account to access professional bookkeeping services and manage your business finances.')
 @section('og_image', asset('images/EverlyLogo.jpeg'))
 
 @push('styles')
 <meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="{{ route('login') }}">
+<link rel="canonical" href="{{ route('register') }}">
 @endpush
 
 @section('content')
@@ -24,25 +24,39 @@
                      alt="Everly Bookkeeping" 
                      class="w-28 h-28 rounded-full mx-auto object-cover mb-4 shadow-lg border-4 border-[#0066CC]">
                 <h1 class="text-3xl md:text-4xl font-bold text-[#003366] mb-2">
-                    Welcome Back
+                    Get Started
                 </h1>
                 <p class="text-[#4A5568] text-lg">
-                    Sign in to access your dashboard
+                    Create your account to begin
                 </p>
             </div>
 
-            <!-- Login Form -->
-            <form method="POST" action="{{ route('login.submit') }}" class="space-y-4">
+            <!-- Registration Form -->
+            <form method="POST" action="{{ route('register.submit') }}" class="space-y-4">
                 @csrf
                 
+                <!-- Name Field -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-[#003366] mb-2">Full Name</label>
+                    <input type="text" 
+                           id="name" 
+                           name="name" 
+                           required 
+                           autofocus
+                           value="{{ old('name') }}"
+                           class="w-full px-4 py-3 border-2 border-[#E2E8F0] rounded-lg focus:border-[#0066CC] focus:outline-none transition-colors @error('name') border-red-500 @enderror">
+                    @error('name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-[#003366] mb-2">Email Address</label>
                     <input type="email" 
                            id="email" 
                            name="email" 
-                           required 
-                           autofocus
+                           required
                            value="{{ old('email') }}"
                            class="w-full px-4 py-3 border-2 border-[#E2E8F0] rounded-lg focus:border-[#0066CC] focus:outline-none transition-colors @error('email') border-red-500 @enderror">
                     @error('email')
@@ -76,19 +90,45 @@
                     @enderror
                 </div>
 
-                <!-- Remember Me -->
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center">
-                        <input type="checkbox" name="remember" class="w-4 h-4 text-[#0066CC] border-gray-300 rounded focus:ring-[#0066CC]">
-                        <span class="ml-2 text-sm text-[#4A5568]">Remember me</span>
+                <!-- Confirm Password Field -->
+                <div x-data="{ showConfirmPassword: false }">
+                    <label for="password_confirmation" class="block text-sm font-medium text-[#003366] mb-2">Confirm Password</label>
+                    <div class="relative">
+                        <input :type="showConfirmPassword ? 'text' : 'password'" 
+                               id="password_confirmation" 
+                               name="password_confirmation" 
+                               required
+                               class="w-full px-4 py-3 pr-12 border-2 border-[#E2E8F0] rounded-lg focus:border-[#0066CC] focus:outline-none transition-colors">
+                        <button type="button" 
+                                @click="showConfirmPassword = !showConfirmPassword"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#0066CC] transition-colors">
+                            <svg x-show="!showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            <svg x-show="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Terms Agreement -->
+                <div class="flex items-start">
+                    <input type="checkbox" 
+                           name="terms" 
+                           id="terms" 
+                           required
+                           class="w-4 h-4 text-[#0066CC] border-gray-300 rounded focus:ring-[#0066CC] mt-1">
+                    <label for="terms" class="ml-2 text-sm text-[#4A5568]">
+                        I agree to the <a href="#" class="text-[#0066CC] hover:underline">Terms of Service</a> and <a href="#" class="text-[#0066CC] hover:underline">Privacy Policy</a>
                     </label>
-                    <a href="#" class="text-sm text-[#0066CC] hover:underline">Forgot password?</a>
                 </div>
 
                 <!-- Submit Button -->
                 <button type="submit" 
                         class="w-full bg-[#0066CC] text-white font-medium px-6 py-4 rounded-full hover:bg-[#0055B8] transition-all duration-300 shadow-lg hover:shadow-xl">
-                    Sign In
+                    Create Account
                 </button>
             </form>
 
@@ -98,11 +138,11 @@
                     <div class="w-full border-t border-[#E2E8F0]"></div>
                 </div>
                 <div class="relative flex justify-center text-sm">
-                    <span class="px-4 bg-white text-[#4A5568]">Or sign in with Google</span>
+                    <span class="px-4 bg-white text-[#4A5568]">Or sign up with Google</span>
                 </div>
             </div>
 
-            <!-- Google Sign In Button -->
+            <!-- Google Sign Up Button -->
             <a href="{{ route('auth.google') }}" 
                class="group relative inline-flex items-center justify-center w-full bg-white border-2 border-[#E2E8F0] hover:border-[#0066CC] hover:shadow-xl text-[#003366] font-medium px-6 py-4 rounded-full transition-all duration-300 shadow-md overflow-hidden">
                 <!-- Hover Effect -->
@@ -117,13 +157,13 @@
                 </svg>
                 
                 <!-- Text -->
-                <span class="relative text-base md:text-lg">Sign in with Google</span>
+                <span class="relative text-base md:text-lg">Sign up with Google</span>
             </a>
 
-            <!-- Sign Up Link -->
+            <!-- Sign In Link -->
             <p class="text-sm text-center text-[#4A5568] mt-6">
-                Don't have an account? 
-                <a href="{{ route('register') }}" class="text-[#0066CC] font-semibold hover:underline">Sign up</a>
+                Already have an account? 
+                <a href="{{ route('login') }}" class="text-[#0066CC] font-semibold hover:underline">Sign in</a>
             </p>
 
             <!-- Benefits -->
@@ -132,25 +172,25 @@
                     <svg class="w-5 h-5 text-[#0066CC] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Access your personalized dashboard</span>
+                    <span>Professional bookkeeping services</span>
                 </div>
                 <div class="flex items-center text-sm text-[#4A5568]">
                     <svg class="w-5 h-5 text-[#0066CC] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Manage your bookkeeping documents</span>
+                    <span>Secure document management</span>
                 </div>
                 <div class="flex items-center text-sm text-[#4A5568]">
                     <svg class="w-5 h-5 text-[#0066CC] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Track your financial reports</span>
+                    <span>Real-time financial reports</span>
                 </div>
             </div>
 
             <!-- Privacy Note -->
             <p class="text-xs text-[#718096] mt-8 text-center">
-                By signing in, you agree to our 
+                By creating an account, you agree to our 
                 <a href="#" class="text-[#0066CC] hover:underline">Terms of Service</a> and 
                 <a href="#" class="text-[#0066CC] hover:underline">Privacy Policy</a>.
             </p>

@@ -19,6 +19,12 @@ Route::post('/contact', [PageController::class, 'submitContact'])->name('contact
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
+Route::post('/login', [GoogleAuthController::class, 'login'])->name('login.submit');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+Route::post('/register', [GoogleAuthController::class, 'register'])->name('register.submit');
 
 // Google OAuth routes
 Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
