@@ -16,7 +16,7 @@ class GoogleAuthController extends Controller
      */
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
     }
 
     /**
@@ -25,7 +25,7 @@ class GoogleAuthController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->stateless()->user();
             
             // Find or create user
             $user = User::where('google_id', $googleUser->id)
@@ -58,8 +58,6 @@ class GoogleAuthController extends Controller
             $route = $user->isAdmin() ? route('admin.dashboard') : route('dashboard');
             return redirect($route)->with('success', 'Successfully signed in with Google!');
 
-        } catch (\Laravel\Socialite\Two\InvalidStateException $e) {
-            return redirect()->route('login')->with('error', 'Authentication failed. Please disable browser extensions (ad blockers, screen recorders) and try again.');
         } catch (\Exception $e) {
             return redirect()->route('login')->with('error', 'Unable to sign in with Google. Please try again or use email/password login.');
         }
