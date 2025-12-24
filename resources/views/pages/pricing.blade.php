@@ -17,81 +17,92 @@
     title="Simple, Straightforward Plans"
     subtitle="No hidden fees. Cancel anytime.">
     <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto stagger-container">
-        <!-- Starter Plan -->
-        <div class="stagger-item">
-            <x-pricing-card
-                title="START UP"
-                price="299"
-                :features="[
-                    '50 Transactions',
-                    'Reports: Monthly',
-                    'Reconciliation: 2 Accounts',
-                    'Expense Categorization: Included',
-                    'Support: Email',
-                    'Reviews: Quarterly',
-                    'AR/AP: Extra',
-                    'Payroll: Extra',
-                    'Tax Prep: Extra',
-                    'Dedicated Bookkeeper: Extra',
-                    'Financial Analysis: Extra',
-                    'KPI Snapshot: Extra',
-                    'Setup Cost: $350'
-                ]"
-                ctaText="Get Started"
-                :ctaLink="route('contact')"
-            />
-        </div>
+        @forelse($plans as $index => $plan)
+            <div class="stagger-item">
+                <x-pricing-card
+                    :title="strtoupper($plan->name)"
+                    :price="number_format($plan->price, 0)"
+                    :features="$plan->features ?? []"
+                    :highlighted="$index === 1"
+                    ctaText="Get Started"
+                    :ctaLink="route('contact')"
+                />
+            </div>
+        @empty
+            <!-- Fallback: Show default plans if no plans in database -->
+            <div class="stagger-item">
+                <x-pricing-card
+                    title="START UP"
+                    price="299"
+                    :features="[
+                        '50 Transactions',
+                        'Reports: Monthly',
+                        'Reconciliation: 2 Accounts',
+                        'Expense Categorization: Included',
+                        'Support: Email',
+                        'Reviews: Quarterly',
+                        'AR/AP: Extra',
+                        'Payroll: Extra',
+                        'Tax Prep: Extra',
+                        'Dedicated Bookkeeper: Extra',
+                        'Financial Analysis: Extra',
+                        'KPI Snapshot: Extra',
+                        'Setup Cost: $350'
+                    ]"
+                    ctaText="Get Started"
+                    :ctaLink="route('contact')"
+                />
+            </div>
 
-        <!-- Professional Plan (Highlighted) -->
-        <div class="stagger-item">
-            <x-pricing-card
-                title="PRO"
-                price="599"
-                :features="[
-                    '200 Transactions',
-                    'Reports: Weekly + Monthly',
-                    'Reconciliation: 4 Accounts',
-                    'Expense Categorization: Included',
-                    'Support: Priority',
-                    'Reviews: Monthly',
-                    'AR/AP: Included',
-                    'Payroll: Extra',
-                    'Tax Prep: Extra',
-                    'Dedicated Bookkeeper: Extra',
-                    'Financial Analysis: Extra',
-                    'KPI Snapshot: Extra',
-                    'Setup Cost: $500'
-                ]"
-                :highlighted="true"
-                ctaText="Get Started"
-                :ctaLink="route('contact')"
-            />
-        </div>
+            <div class="stagger-item">
+                <x-pricing-card
+                    title="PRO"
+                    price="599"
+                    :features="[
+                        '200 Transactions',
+                        'Reports: Weekly + Monthly',
+                        'Reconciliation: 4 Accounts',
+                        'Expense Categorization: Included',
+                        'Support: Priority',
+                        'Reviews: Monthly',
+                        'AR/AP: Included',
+                        'Payroll: Extra',
+                        'Tax Prep: Extra',
+                        'Dedicated Bookkeeper: Extra',
+                        'Financial Analysis: Extra',
+                        'KPI Snapshot: Extra',
+                        'Setup Cost: $500'
+                    ]"
+                    :highlighted="true"
+                    ctaText="Get Started"
+                    :ctaLink="route('contact')"
+                />
+            </div>
 
-        <!-- Enterprise Plan -->
-        <div class="stagger-item">
-            <x-pricing-card
-                title="ENTERPRISE"
-                price="999"
-                :features="[
-                    '500 Transactions',
-                    'Reports: Weekly + Monthly + YTD',
-                    'Reconciliation: 6 Accounts',
-                    'Expense Categorization: Included',
-                    'Support: 24/7 Priority Support',
-                    'Reviews: Weekly',
-                    'AR/AP: Included',
-                    'Payroll: Included',
-                    'Tax Prep: Included',
-                    'Dedicated Bookkeeper: Included',
-                    'Financial Analysis: Included',
-                    'KPI Snapshot: Included',
-                    'Setup Cost: $750'
-                ]"
-                ctaText="Contact Sales"
-                :ctaLink="route('contact')"
-            />
-        </div>
+            <div class="stagger-item">
+                <x-pricing-card
+                    title="ENTERPRISE"
+                    price="999"
+                    :features="[
+                        '500 Transactions',
+                        'Reports: Weekly + Monthly + YTD',
+                        'Reconciliation: 6 Accounts',
+                        'Expense Categorization: Included',
+                        'Support: 24/7 Priority Support',
+                        'Reviews: Weekly',
+                        'AR/AP: Included',
+                        'Payroll: Included',
+                        'Tax Prep: Included',
+                        'Dedicated Bookkeeper: Included',
+                        'Financial Analysis: Included',
+                        'KPI Snapshot: Included',
+                        'Setup Cost: $750'
+                    ]"
+                    ctaText="Contact Sales"
+                    :ctaLink="route('contact')"
+                />
+            </div>
+        @endforelse
     </div>
 
     <p class="text-center text-[#4A5568] mt-8">All plans include secure data storage, bank-level encryption, and 24/7 dashboard access.</p>

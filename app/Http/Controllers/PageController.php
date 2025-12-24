@@ -32,9 +32,14 @@ class PageController extends Controller
 
     public function pricing()
     {
+        $plans = \App\Models\Plan::where('is_active', true)
+            ->orderBy('price', 'asc')
+            ->get();
+
         return view('pages.pricing', [
             'title' => 'Pricing Plans | BookKeep',
             'description' => 'Transparent pricing for professional bookkeeping services. Choose a plan that fits your business needs.',
+            'plans' => $plans,
         ]);
     }
 

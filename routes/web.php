@@ -39,6 +39,13 @@ Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->n
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 Route::post('/logout', [GoogleAuthController::class, 'logout'])->name('logout');
 
+// Profile routes (accessible to both users and admins)
+Route::middleware(['auth'])->group(function () {
+    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
 // User Dashboard routes
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -57,11 +64,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('subscriptions/subscribe/{plan}', [UserSubscriptionController::class, 'subscribe'])->name('subscriptions.subscribe');
     Route::get('subscriptions/my-subscription', [UserSubscriptionController::class, 'show'])->name('subscriptions.show');
     Route::post('subscriptions/cancel', [UserSubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
-    
-    // User Profile
-    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Admin Dashboard routes
@@ -90,10 +92,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::resource('subscriptions', SubscriptionController::class);
     });
     
-    // Admin Profile
-    Route::get('admin/profile', [ProfileController::class, 'show'])->name('admin.profile.show');
-    Route::get('admin/profile/edit', [ProfileController::class, 'edit'])->name('admin.profile.edit');
-    Route::put('admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
 });
 
 

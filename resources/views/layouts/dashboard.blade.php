@@ -8,6 +8,10 @@
 
     <title>@yield('title', 'Dashboard') - Everly Bookkeeping</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/EverlyLogo.jpeg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/EverlyLogo.jpeg') }}">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     

@@ -19,7 +19,19 @@ class SubscriptionController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('admin.subscriptions.index', compact('subscriptions'));
+        // Calculate statistics
+        $totalSubscriptions = Subscription::count();
+        $activeSubscriptions = Subscription::where('status', 'active')->count();
+        $expiredSubscriptions = Subscription::where('status', 'expired')->count();
+        $cancelledSubscriptions = Subscription::where('status', 'cancelled')->count();
+
+        return view('admin.subscriptions.index', compact(
+            'subscriptions',
+            'totalSubscriptions',
+            'activeSubscriptions',
+            'expiredSubscriptions',
+            'cancelledSubscriptions'
+        ));
     }
 
     /**
