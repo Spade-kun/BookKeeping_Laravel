@@ -91,6 +91,48 @@
                 @enderror
             </div>
 
+            <!-- Year Selection -->
+            <div>
+                <label for="year" class="block text-sm font-medium text-[#003366] mb-2">
+                    Year <span class="text-red-500">*</span>
+                </label>
+                <input type="number" 
+                       name="year" 
+                       id="year" 
+                       required
+                       min="1900"
+                       max="{{ date('Y') + 10 }}"
+                       value="{{ old('year', date('Y')) }}"
+                       placeholder="e.g., {{ date('Y') }}"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('year') border-red-500 @enderror">
+                <p class="mt-1 text-xs text-[#4A5568]">Enter the year of the document (1900 - {{ date('Y') + 10 }})</p>
+                @error('year')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Type Selection -->
+            <div>
+                <label for="type" class="block text-sm font-medium text-[#003366] mb-2">
+                    Document Type <span class="text-red-500">*</span>
+                </label>
+                <select name="type" 
+                        id="type" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('type') border-red-500 @enderror">
+                    <option value="">Select Type</option>
+                    <option value="Receipts" {{ old('type') == 'Receipts' ? 'selected' : '' }}>Receipts</option>
+                    <option value="Invoices" {{ old('type') == 'Invoices' ? 'selected' : '' }}>Invoices</option>
+                    <option value="Bank Statements" {{ old('type') == 'Bank Statements' ? 'selected' : '' }}>Bank Statements</option>
+                    <option value="Payroll" {{ old('type') == 'Payroll' ? 'selected' : '' }}>Payroll</option>
+                    <option value="Reports" {{ old('type') == 'Reports' ? 'selected' : '' }}>Reports</option>
+                    <option value="Other" {{ old('type') == 'Other' ? 'selected' : '' }}>Other</option>
+                </select>
+                @error('type')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Description -->
             <div>
                 <label for="description" class="block text-sm font-medium text-[#003366] mb-2">

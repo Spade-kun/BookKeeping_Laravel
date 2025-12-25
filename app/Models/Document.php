@@ -18,6 +18,12 @@ class Document extends Model
         'file_size',
         'uploaded_by',
         'description',
+        'year',
+        'type',
+    ];
+
+    protected $casts = [
+        'year' => 'integer',
     ];
 
     /**

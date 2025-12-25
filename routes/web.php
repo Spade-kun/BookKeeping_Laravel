@@ -72,8 +72,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     
     // Admin Documents
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::resource('documents', DocumentController::class);
+        Route::get('documents', [\App\Http\Controllers\Admin\DocumentController::class, 'index'])->name('documents.index');
+        Route::get('documents/{document}', [DocumentController::class, 'show'])->name('documents.show');
         Route::get('documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+        Route::delete('documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
         
         // Admin Reports
         Route::resource('reports', ReportController::class);

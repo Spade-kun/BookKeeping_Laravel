@@ -14,22 +14,60 @@ class DocumentController extends Controller
     /**
      * Display a listing of documents.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
+        $year = $request->get('year');
+        $type = $request->get('type');
+        $search = $request->get('search');
         
-        if ($user->isAdmin()) {
-            $documents = Document::with(['user', 'uploader'])
-                ->latest()
-                ->paginate(15);
-        } else {
-            $documents = Document::with(['uploader'])
-                ->where('user_id', $user->id)
-                ->latest()
-                ->paginate(15);
+        $query = Document::with(['user', 'uploader']);
+        
+        if (!$user->isAdmin()) {
+            $query->where('user_id', $user->id);
         }
+        
+        // Filter by year
+        if ($year) {
+            $query->where('year', $year);
+        }
+        
+        // Filter by type
+        if ($type) {
+            $query->where('type', $type);
+        }
+        
+        // Search
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('file_name', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+        
+        $documents = $query->latest()->paginate(15);
+        
+        // Get available years dynamically from database
+        $availableYears = Document::query()
+            ->when(!$user->isAdmin(), fn($q) => $q->where('user_id', $user->id))
+            ->distinct()
+            ->pluck('year')
+            ->sort()
+            ->reverse();
+        $years = $availableYears->isNotEmpty() ? $availableYears->values()->all() : [date('Y')];
+        $types = ['Receipts', 'Invoices', 'Bank Statements', 'Payroll', 'Reports', 'Other'];
+        
+        // Get folder structure (year > type grouping)
+        $folders = Document::query()
+            ->when(!$user->isAdmin(), fn($q) => $q->where('user_id', $user->id))
+            ->selectRaw('year, type, COUNT(*) as count')
+            ->groupBy('year', 'type')
+            ->orderBy('year', 'desc')
+            ->orderBy('type')
+            ->get()
+            ->groupBy('year');
 
-        return view('documents.index', compact('documents'));
+        return view('documents.index', compact('documents', 'years', 'types', 'folders', 'year', 'type'));
     }
 
     /**
@@ -58,6 +96,8 @@ class DocumentController extends Controller
             'file' => 'required|file|mimes:pdf,jpg,jpeg,png,xlsx,xls,csv,doc,docx|max:10240',
             'user_id' => auth()->user()->isAdmin() ? 'required|exists:users,id' : 'nullable',
             'description' => 'nullable|string|max:1000',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
+            'type' => 'required|in:Receipts,Invoices,Bank Statements,Payroll,Reports,Other',
         ]);
 
         $file = $request->file('file');
@@ -65,8 +105,9 @@ class DocumentController extends Controller
             ? $request->user_id 
             : auth()->id();
 
-        // Store file in private storage
-        $path = $file->store('documents/' . $userId, 'private');
+        // Store file in organized folder structure: documents/{userId}/{year}/{type}/
+        $folderPath = "documents/{$userId}/{$request->year}/{$request->type}";
+        $path = $file->store($folderPath, 'private');
 
         $document = Document::create([
             'user_id' => $userId,
@@ -76,7 +117,12 @@ class DocumentController extends Controller
             'file_size' => $file->getSize(),
             'uploaded_by' => auth()->id(),
             'description' => $request->description,
+            'year' => $request->year,
+            'type' => $request->type,
         ]);
+
+        // TODO: Log activity when ActivityLog model is created
+        // \App\Models\ActivityLog::create([...]);
 
         return redirect()->route('documents.index')
             ->with('success', 'Document uploaded successfully.');
