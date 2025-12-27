@@ -96,16 +96,16 @@
                     <p class="text-2xl font-bold text-[#003366] mb-2">{{ $user->activeSubscription->plan->name }}</p>
                     <p class="text-[#4A5568]">
                         ${{ number_format($user->activeSubscription->plan->price, 2) }} / 
-                        {{ $user->activeSubscription->plan->billing_cycle }}
+                        {{ $user->activeSubscription->plan->billing_period }}
                     </p>
                     <div class="mt-4 space-y-2">
                         <div class="flex justify-between text-sm">
                             <span class="text-[#4A5568]">Start Date:</span>
-                            <span class="font-medium text-[#003366]">{{ $user->activeSubscription->start_date->format('M d, Y') }}</span>
+                            <span class="font-medium text-[#003366]">{{ $user->activeSubscription->started_at ? \Carbon\Carbon::parse($user->activeSubscription->started_at)->format('M d, Y') : 'N/A' }}</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-[#4A5568]">End Date:</span>
-                            <span class="font-medium text-[#003366]">{{ $user->activeSubscription->end_date->format('M d, Y') }}</span>
+                            <span class="font-medium text-[#003366]">{{ $user->activeSubscription->ends_at ? \Carbon\Carbon::parse($user->activeSubscription->ends_at)->format('M d, Y') : 'N/A' }}</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-[#4A5568]">Status:</span>

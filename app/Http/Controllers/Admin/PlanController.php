@@ -43,8 +43,10 @@ class PlanController extends Controller
             'support_level' => 'required|string|max:255',
             'features' => 'nullable|array',
             'features.*' => 'string',
-            'is_active' => 'boolean',
         ]);
+
+        // Handle is_active checkbox (unchecked = not in request)
+        $validated['is_active'] = $request->has('is_active');
 
         Plan::create($validated);
 
@@ -85,8 +87,10 @@ class PlanController extends Controller
             'support_level' => 'required|string|max:255',
             'features' => 'nullable|array',
             'features.*' => 'string',
-            'is_active' => 'boolean',
         ]);
+
+        // Handle is_active checkbox (unchecked = not in request)
+        $validated['is_active'] = $request->has('is_active');
 
         $plan->update($validated);
 

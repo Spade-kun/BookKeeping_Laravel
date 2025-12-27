@@ -5,29 +5,45 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Hero animations on page load
 export function initHeroAnimations() {
+    const heroHeadline = document.querySelector('.hero-headline');
+    const heroSubheadline = document.querySelector('.hero-subheadline');
+    const heroCta = document.querySelector('.hero-cta');
+    
+    // Only run animations if hero elements exist
+    if (!heroHeadline && !heroSubheadline && !heroCta) return;
+    
     const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
     
-    timeline
-        .from('.hero-headline', {
+    if (heroHeadline) {
+        timeline.from('.hero-headline', {
             y: 40,
             opacity: 0,
             duration: 1,
-        })
-        .from('.hero-subheadline', {
+        });
+    }
+    
+    if (heroSubheadline) {
+        timeline.from('.hero-subheadline', {
             y: 30,
             opacity: 0,
             duration: 0.8,
-        }, '-=0.4')
-        .from('.hero-cta', {
+        }, '-=0.4');
+    }
+    
+    if (heroCta) {
+        timeline.from('.hero-cta', {
             y: 20,
             opacity: 0,
             duration: 0.6,
         }, '-=0.3');
+    }
 }
 
 // Scroll-triggered section animations
 export function initScrollAnimations() {
     const sections = document.querySelectorAll('.animate-section');
+    
+    if (sections.length === 0) return;
     
     sections.forEach((section) => {
         gsap.from(section, {
@@ -48,8 +64,12 @@ export function initScrollAnimations() {
 export function initStaggerAnimations() {
     const containers = document.querySelectorAll('.stagger-container');
     
+    if (containers.length === 0) return;
+    
     containers.forEach((container) => {
         const children = container.querySelectorAll('.stagger-item');
+        
+        if (children.length === 0) return;
         
         gsap.from(children, {
             scrollTrigger: {
@@ -69,6 +89,8 @@ export function initStaggerAnimations() {
 // Card hover animations
 export function initCardHoverAnimations() {
     const cards = document.querySelectorAll('.hover-card');
+    
+    if (cards.length === 0) return;
     
     cards.forEach((card) => {
         card.addEventListener('mouseenter', () => {

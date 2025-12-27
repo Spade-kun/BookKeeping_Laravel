@@ -27,8 +27,10 @@
                 <div>
                     <p class="font-medium text-[#003366]">Current Plan: {{ auth()->user()->activeSubscription->plan->name }}</p>
                     <p class="text-sm text-[#4A5568] mt-1">
-                        {{ auth()->user()->activeSubscription->plan->billing_cycle == 'monthly' ? 'Monthly' : 'Yearly' }} billing 
-                        - Expires {{ auth()->user()->activeSubscription->end_date->format('M d, Y') }}
+                        {{ auth()->user()->activeSubscription->plan->billing_period == 'monthly' ? 'Monthly' : 'Yearly' }} billing 
+                        @if(auth()->user()->activeSubscription->ends_at)
+                            - Expires {{ \Carbon\Carbon::parse(auth()->user()->activeSubscription->ends_at)->format('M d, Y') }}
+                        @endif
                     </p>
                 </div>
                 <form action="{{ route('subscriptions.cancel') }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel your subscription?');">
@@ -58,9 +60,9 @@
                         <h3 class="text-2xl font-bold text-[#003366] mb-2">{{ $plan->name }}</h3>
                         <div class="flex items-baseline justify-center">
                             <span class="text-4xl font-extrabold text-[#0066CC]">${{ number_format($plan->price, 2) }}</span>
-                            <span class="text-[#4A5568] ml-2">/{{ $plan->billing_cycle == 'monthly' ? 'month' : 'year' }}</span>
+                            <span class="text-[#4A5568] ml-2">/{{ $plan->billing_period == 'monthly' ? 'month' : 'year' }}</span>
                         </div>
-                        @if($plan->billing_cycle == 'yearly')
+                        @if($plan->billing_period == 'yearly')
                             <p class="text-sm text-green-600 mt-2">Save {{ number_format((1 - ($plan->price / 12) / ($plan->price / 12)) * 100) }}% vs monthly</p>
                         @endif
                     </div>

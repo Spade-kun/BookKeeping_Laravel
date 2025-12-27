@@ -18,7 +18,12 @@ class TransactionController extends Controller
             ->latest('date')
             ->paginate(20);
 
-        return view('admin.transactions.index', compact('transactions'));
+        // Calculate totals from all transactions (not just paginated ones)
+        $totalIncome = Transaction::where('type', 'income')->sum('amount');
+        $totalExpenses = Transaction::where('type', 'expense')->sum('amount');
+        $netBalance = $totalIncome - $totalExpenses;
+
+        return view('admin.transactions.index', compact('transactions', 'totalIncome', 'totalExpenses', 'netBalance'));
     }
 
     /**

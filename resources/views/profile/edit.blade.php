@@ -94,28 +94,54 @@
             <!-- Change Password Section -->
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-lg font-semibold text-[#003366]">Change Password</h3>
-                    <p class="text-sm text-[#4A5568] mt-1">Leave blank if you don't want to change your password</p>
+                    <h3 class="text-lg font-semibold text-[#003366]">
+                        @if(!auth()->user()->hasPassword())
+                            Set Password
+                        @else
+                            Change Password
+                        @endif
+                    </h3>
+                    @if(!auth()->user()->hasPassword())
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-2">
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div>
+                                    <p class="text-sm font-medium text-blue-900">Please add a password to your account</p>
+                                    <p class="text-sm text-blue-700 mt-1">You signed in using Google. Add a password to enable traditional login as well.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-sm text-[#4A5568] mt-1">Leave blank if you don't want to change your password</p>
+                    @endif
                 </div>
 
-                <!-- Current Password -->
-                <div>
-                    <label for="current_password" class="block text-sm font-medium text-[#003366] mb-2">
-                        Current Password
-                    </label>
-                    <input type="password" 
-                           name="current_password" 
-                           id="current_password" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('current_password') border-red-500 @enderror">
-                    @error('current_password')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                @if(auth()->user()->hasPassword())
+                    <!-- Current Password (only shown if user already has a password) -->
+                    <div>
+                        <label for="current_password" class="block text-sm font-medium text-[#003366] mb-2">
+                            Current Password
+                        </label>
+                        <input type="password" 
+                               name="current_password" 
+                               id="current_password" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('current_password') border-red-500 @enderror">
+                        @error('current_password')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
 
                 <!-- New Password -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-[#003366] mb-2">
-                        New Password
+                        @if(!auth()->user()->hasPassword())
+                            Password <span class="text-red-500">*</span>
+                        @else
+                            New Password
+                        @endif
                     </label>
                     <input type="password" 
                            name="password" 
@@ -130,7 +156,11 @@
                 <!-- Confirm Password -->
                 <div>
                     <label for="password_confirmation" class="block text-sm font-medium text-[#003366] mb-2">
-                        Confirm New Password
+                        @if(!auth()->user()->hasPassword())
+                            Confirm Password <span class="text-red-500">*</span>
+                        @else
+                            Confirm New Password
+                        @endif
                     </label>
                     <input type="password" 
                            name="password_confirmation" 

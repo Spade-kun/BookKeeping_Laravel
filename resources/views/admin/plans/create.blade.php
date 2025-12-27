@@ -71,18 +71,92 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="billing_cycle" class="block text-sm font-medium text-[#003366] mb-2">
+                    <label for="billing_period" class="block text-sm font-medium text-[#003366] mb-2">
                         Billing Cycle <span class="text-red-500">*</span>
                     </label>
-                    <select name="billing_cycle" 
-                            id="billing_cycle"
+                    <select name="billing_period" 
+                            id="billing_period"
                             required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('billing_cycle') border-red-500 @enderror">
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('billing_period') border-red-500 @enderror">
                         <option value="">Select cycle</option>
-                        <option value="monthly" {{ old('billing_cycle') == 'monthly' ? 'selected' : '' }}>Monthly</option>
-                        <option value="yearly" {{ old('billing_cycle') == 'yearly' ? 'selected' : '' }}>Yearly</option>
+                        <option value="monthly" {{ old('billing_period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                        <option value="yearly" {{ old('billing_period') == 'yearly' ? 'selected' : '' }}>Yearly</option>
                     </select>
-                    @error('billing_cycle')
+                    @error('billing_period')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Plan Limits -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="transaction_limit" class="block text-sm font-medium text-[#003366] mb-2">
+                        Transaction Limit
+                    </label>
+                    <input type="number" 
+                           name="transaction_limit" 
+                           id="transaction_limit" 
+                           value="{{ old('transaction_limit') }}"
+                           min="0"
+                           placeholder="e.g., 100"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('transaction_limit') border-red-500 @enderror">
+                    <p class="text-xs text-[#4A5568] mt-1">Leave blank for unlimited</p>
+                    @error('transaction_limit')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="accounts_supported" class="block text-sm font-medium text-[#003366] mb-2">
+                        Accounts Supported
+                    </label>
+                    <input type="number" 
+                           name="accounts_supported" 
+                           id="accounts_supported" 
+                           value="{{ old('accounts_supported') }}"
+                           min="1"
+                           placeholder="e.g., 5"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('accounts_supported') border-red-500 @enderror">
+                    <p class="text-xs text-[#4A5568] mt-1">Number of bank accounts</p>
+                    @error('accounts_supported')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Reports & Support -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="reports_frequency" class="block text-sm font-medium text-[#003366] mb-2">
+                        Reports Frequency <span class="text-red-500">*</span>
+                    </label>
+                    <select name="reports_frequency" 
+                            id="reports_frequency"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('reports_frequency') border-red-500 @enderror">
+                        <option value="">Select frequency</option>
+                        <option value="monthly" {{ old('reports_frequency') == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                        <option value="quarterly" {{ old('reports_frequency') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
+                        <option value="annual" {{ old('reports_frequency') == 'annual' ? 'selected' : '' }}>Annual</option>
+                    </select>
+                    @error('reports_frequency')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="support_level" class="block text-sm font-medium text-[#003366] mb-2">
+                        Support Level <span class="text-red-500">*</span>
+                    </label>
+                    <select name="support_level" 
+                            id="support_level"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('support_level') border-red-500 @enderror">
+                        <option value="">Select level</option>
+                        <option value="email" {{ old('support_level') == 'email' ? 'selected' : '' }}>Email</option>
+                        <option value="priority" {{ old('support_level') == 'priority' ? 'selected' : '' }}>Priority</option>
+                        <option value="dedicated" {{ old('support_level') == 'dedicated' ? 'selected' : '' }}>Dedicated</option>
+                    </select>
+                    @error('support_level')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

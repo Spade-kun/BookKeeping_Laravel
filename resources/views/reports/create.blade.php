@@ -154,13 +154,15 @@
                                        name="file" 
                                        type="file" 
                                        class="sr-only"
-                                       accept=".pdf,.xlsx,.xls,.csv">
+                                       accept=".pdf,.xlsx,.xls,.csv"
+                                       onchange="displayFileName(this)">
                             </label>
                             <p class="pl-1">or drag and drop</p>
                         </div>
                         <p class="text-xs text-gray-500">
                             PDF, XLSX, XLS, CSV up to 10MB
                         </p>
+                        <p id="file-name" class="text-sm font-medium text-[#0066CC] mt-2"></p>
                     </div>
                 </div>
                 @error('file')
@@ -197,4 +199,13 @@
         </form>
     </div>
 </div>
+
+<script>
+function displayFileName(input) {
+    const fileNameDisplay = document.getElementById('file-name');
+    if (input.files && input.files[0]) {
+        fileNameDisplay.textContent = 'Selected: ' + input.files[0].name;
+    }
+}
+</script>
 @endsection

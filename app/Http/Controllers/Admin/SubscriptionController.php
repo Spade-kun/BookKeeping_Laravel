@@ -113,7 +113,7 @@ class SubscriptionController extends Controller
     /**
      * Cancel the specified subscription.
      */
-    public function destroy(Subscription $subscription)
+    public function cancel(Subscription $subscription)
     {
         $subscription->update([
             'status' => 'cancelled',
@@ -122,5 +122,16 @@ class SubscriptionController extends Controller
 
         return redirect()->route('admin.subscriptions.index')
             ->with('success', 'Subscription cancelled successfully.');
+    }
+
+    /**
+     * Remove the specified subscription from storage.
+     */
+    public function destroy(Subscription $subscription)
+    {
+        $subscription->delete();
+
+        return redirect()->route('admin.subscriptions.index')
+            ->with('success', 'Subscription deleted successfully.');
     }
 }

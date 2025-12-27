@@ -14,21 +14,42 @@ class ReportController extends Controller
     /**
      * Display a listing of reports.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         
         if ($user->isAdmin()) {
-            $reports = Report::with('user')
-                ->latest()
-                ->paginate(15);
+            $userId = $request->get('user');
+            
+            // Get all users who have reports
+            $usersWithReports = Report::select('user_id')
+                ->distinct()
+                ->with('user')
+                ->get()
+                ->pluck('user')
+                ->unique('id');
+            
+            if ($userId) {
+                // Show reports for specific user
+                $reports = Report::where('user_id', $userId)
+                    ->with('user')
+                    ->latest()
+                    ->paginate(15);
+                $selectedUser = \App\Models\User::find($userId);
+            } else {
+                // Show folder view (users)
+                $reports = null;
+                $selectedUser = null;
+            }
+            
+            return view('reports.index', compact('reports', 'usersWithReports', 'selectedUser'));
         } else {
             $reports = Report::where('user_id', $user->id)
                 ->latest()
                 ->paginate(15);
+            
+            return view('reports.index', compact('reports'));
         }
-
-        return view('reports.index', compact('reports'));
     }
 
     /**
@@ -36,8 +57,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Report::class);
-        
+        // Only admins can access this (protected by role:admin middleware)
         $users = \App\Models\User::where('role', 'user')->get();
         return view('reports.create', compact('users'));
     }
@@ -47,12 +67,11 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Report::class);
-
+        // Only admins can access this (protected by role:admin middleware)
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
-            'report_type' => 'required|in:monthly,quarterly,yearly,custom',
+            'report_type' => 'required|in:monthly,quarterly,annual,custom',
             'file' => 'nullable|file|mimes:pdf,xlsx,xls,csv|max:10240',
             'period' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
@@ -80,7 +99,10 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        $this->authorize('view', $report);
+        // Check if user can view this report
+        if (!auth()->user()->isAdmin() && auth()->user()->id !== $report->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
         
         return view('reports.show', compact('report'));
     }
@@ -90,7 +112,10 @@ class ReportController extends Controller
      */
     public function download(Report $report)
     {
-        $this->authorize('view', $report);
+        // Check if user can view this report
+        if (!auth()->user()->isAdmin() && auth()->user()->id !== $report->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (!$report->file_path || !Storage::disk('private')->exists($report->file_path)) {
             abort(404, 'File not found.');
@@ -107,8 +132,7 @@ class ReportController extends Controller
      */
     public function edit(Report $report)
     {
-        $this->authorize('update', $report);
-
+        // Only admins can access this (protected by role:admin middleware)
         $users = \App\Models\User::where('role', 'user')->get();
         return view('reports.edit', compact('report', 'users'));
     }
@@ -118,8 +142,7 @@ class ReportController extends Controller
      */
     public function update(Request $request, Report $report)
     {
-        $this->authorize('update', $report);
-
+        // Only admins can access this (protected by role:admin middleware)
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
@@ -154,8 +177,7 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        $this->authorize('delete', $report);
-
+        // Only admins can access this (protected by role:admin middleware)
         // Delete file from storage
         if ($report->file_path) {
             Storage::disk('private')->delete($report->file_path);

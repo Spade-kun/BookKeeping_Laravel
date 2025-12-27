@@ -26,7 +26,7 @@
                     </svg>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-[#003366]">0</h3>
+            <h3 class="text-2xl font-bold text-[#003366]">{{ $stats['documents'] ?? 0 }}</h3>
             <p class="text-[#4A5568] text-sm">Documents</p>
         </div>
 
@@ -39,7 +39,7 @@
                     </svg>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-[#003366]">0</h3>
+            <h3 class="text-2xl font-bold text-[#003366]">{{ $stats['reports'] ?? 0 }}</h3>
             <p class="text-[#4A5568] text-sm">Reports</p>
         </div>
 
@@ -52,7 +52,13 @@
                     </svg>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-[#003366]">-</h3>
+            <h3 class="text-2xl font-bold text-[#003366]">
+                @if(isset($stats['nextReview']) && $stats['nextReview'])
+                    {{ $stats['nextReview']->format('M d, Y') }}
+                @else
+                    -
+                @endif
+            </h3>
             <p class="text-[#4A5568] text-sm">Next Review</p>
         </div>
     </div>

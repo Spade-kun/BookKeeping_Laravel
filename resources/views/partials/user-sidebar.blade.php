@@ -34,3 +34,40 @@
     </svg>
     <p class="text-white">Support</p>
 </a>
+
+<!-- Current Plan Badge -->
+<div class="mt-auto pt-4 border-t border-blue-700">
+    @if(auth()->user()->activeSubscription)
+        <div class="bg-gradient-to-br from-blue-800 to-blue-900 rounded-lg p-3 shadow-lg">
+            <div class="flex items-center justify-between mb-1">
+                <span class="text-[10px] font-semibold text-blue-300 uppercase tracking-wide">Current Plan</span>
+                <span class="inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-green-500 text-white">
+                    Active
+                </span>
+            </div>
+            <p class="text-white font-bold text-sm mb-0.5">{{ auth()->user()->activeSubscription->plan->name }}</p>
+            <p class="text-blue-200 text-[11px] mb-2">
+                ${{ number_format(auth()->user()->activeSubscription->plan->price, 2) }}/{{ auth()->user()->activeSubscription->plan->billing_period }}
+            </p>
+            @if(auth()->user()->activeSubscription->ends_at)
+                <div class="flex items-center text-[10px] text-blue-300">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Renews {{ \Carbon\Carbon::parse(auth()->user()->activeSubscription->ends_at)->format('M d, Y') }}
+                </div>
+            @endif
+        </div>
+    @else
+        <div class="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-3 shadow-lg">
+            <p class="text-white font-semibold text-xs mb-2">No Active Plan</p>
+            <a href="{{ route('subscriptions.index') }}" 
+               class="inline-flex items-center justify-center w-full px-2 py-1.5 text-[10px] font-medium text-white bg-[#0066CC] hover:bg-[#003366] rounded-lg transition-colors">
+                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Choose Plan
+            </a>
+        </div>
+    @endif
+</div>

@@ -92,6 +92,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         
         // Admin Subscriptions
         Route::resource('subscriptions', SubscriptionController::class);
+        Route::post('subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
     });
     
 });

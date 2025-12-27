@@ -98,6 +98,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's active subscription (alias for subscription).
+     */
+    public function activeSubscription()
+    {
+        return $this->hasOne(Subscription::class)->where('status', 'active');
+    }
+
+    /**
      * Get all subscriptions for the user.
      */
     public function subscriptions()
@@ -111,5 +119,14 @@ class User extends Authenticatable
     public function hasActiveSubscription(): bool
     {
         return $this->subscription()->exists();
+    }
+
+    /**
+     * Check if user has a password set.
+     * Google OAuth users may not have a password.
+     */
+    public function hasPassword(): bool
+    {
+        return !empty($this->password);
     }
 }

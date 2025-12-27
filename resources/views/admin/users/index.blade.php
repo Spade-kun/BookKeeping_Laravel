@@ -29,7 +29,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#4A5568]">Total Users</p>
-                    <p class="text-3xl font-bold text-[#003366] mt-1">{{ $users->total() }}</p>
+                    <p class="text-3xl font-bold text-[#003366] mt-1">{{ $stats['total_users'] }}</p>
                 </div>
                 <div class="bg-[#E6F2FF] p-3 rounded-lg">
                     <svg class="w-8 h-8 text-[#0066CC]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#4A5568]">Active Subscriptions</p>
-                    <p class="text-3xl font-bold text-green-600 mt-1">{{ $users->where('subscriptions_count', '>', 0)->count() }}</p>
+                    <p class="text-3xl font-bold text-green-600 mt-1">{{ $stats['active_subscriptions'] }}</p>
                 </div>
                 <div class="bg-green-50 p-3 rounded-lg">
                     <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,7 +55,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#4A5568]">Admins</p>
-                    <p class="text-3xl font-bold text-[#0066CC] mt-1">{{ $users->where('role', 'admin')->count() }}</p>
+                    <p class="text-3xl font-bold text-[#0066CC] mt-1">{{ $stats['total_admins'] }}</p>
                 </div>
                 <div class="bg-[#E6F2FF] p-3 rounded-lg">
                     <svg class="w-8 h-8 text-[#0066CC]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#4A5568]">Regular Users</p>
-                    <p class="text-3xl font-bold text-[#003366] mt-1">{{ $users->where('role', 'user')->count() }}</p>
+                    <p class="text-3xl font-bold text-[#003366] mt-1">{{ $stats['total_regular_users'] }}</p>
                 </div>
                 <div class="bg-[#F7FAFC] p-3 rounded-lg">
                     <svg class="w-8 h-8 text-[#4A5568]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,14 +125,14 @@
                                     @if($user->activeSubscription)
                                         <div>
                                             <p class="font-medium text-[#003366]">{{ $user->activeSubscription->plan->name }}</p>
-                                            <p class="text-xs text-[#4A5568]">Expires {{ $user->activeSubscription->end_date->format('M d, Y') }}</p>
+                                            <p class="text-xs text-[#4A5568]">Expires {{ $user->activeSubscription->ends_at ? \Carbon\Carbon::parse($user->activeSubscription->ends_at)->format('M d, Y') : 'N/A' }}</p>
                                         </div>
                                     @else
                                         <span class="text-sm text-[#4A5568]">No subscription</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 text-sm text-[#4A5568]">
-                                    {{ $user->documents_count ?? 0 }} files
+                                    {{ $user->documents()->count() ?? 0 }} files
                                 </td>
                                 <td class="px-6 py-4 text-sm text-[#4A5568]">
                                     {{ $user->created_at->format('M d, Y') }}

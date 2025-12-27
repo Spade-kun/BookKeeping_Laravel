@@ -15,11 +15,18 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('subscription.plan')
-            ->where('role', 'user')
             ->latest()
             ->paginate(15);
 
-        return view('admin.users.index', compact('users'));
+        // Get stats for all users (not just paginated ones)
+        $stats = [
+            'total_users' => User::count(),
+            'total_admins' => User::where('role', 'admin')->count(),
+            'total_regular_users' => User::where('role', 'user')->count(),
+            'active_subscriptions' => Subscription::where('status', 'active')->count(),
+        ];
+
+        return view('admin.users.index', compact('users', 'stats'));
     }
 
     /**

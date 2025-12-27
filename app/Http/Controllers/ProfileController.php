@@ -32,11 +32,31 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $validated = $request->validate([
+        // Validation rules
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8|confirmed',
-        ]);
+        ];
+
+        // If user has a password (not Google OAuth only), require current password to change it
+        if ($user->hasPassword()) {
+            $rules['current_password'] = 'required_with:password';
+            $rules['password'] = 'nullable|min:8|confirmed';
+        } else {
+            // Google OAuth users setting password for the first time
+            $rules['password'] = 'nullable|min:8|confirmed';
+        }
+
+        $validated = $request->validate($rules);
+
+        // If user has a password, verify current password before allowing change
+        if ($user->hasPassword() && $request->filled('password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors([
+                    'current_password' => 'The current password is incorrect.'
+                ])->withInput();
+            }
+        }
 
         $data = [
             'name' => $validated['name'],

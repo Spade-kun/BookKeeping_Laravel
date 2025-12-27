@@ -76,7 +76,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-[#4A5568]">Billing Cycle:</span>
-                                <span class="font-medium text-[#003366] capitalize">{{ $plan->billing_cycle }}</span>
+                                <span class="font-medium text-[#003366] capitalize">{{ $plan->billing_period }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-[#4A5568]">Status:</span>
@@ -101,7 +101,7 @@
                             <div class="flex justify-between">
                                 <span class="text-[#4A5568]">Monthly Revenue:</span>
                                 <span class="font-medium text-green-600">
-                                    ${{ number_format($plan->subscriptions->where('status', 'active')->count() * ($plan->billing_cycle == 'monthly' ? $plan->price : $plan->price / 12), 2) }}
+                                    ${{ number_format($plan->subscriptions->where('status', 'active')->count() * ($plan->billing_period == 'monthly' ? $plan->price : $plan->price / 12), 2) }}
                                 </span>
                             </div>
                         </div>
@@ -171,10 +171,10 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 text-sm text-[#4A5568]">
-                                    {{ $subscription->start_date->format('M d, Y') }}
+                                    {{ $subscription->started_at ? $subscription->started_at->format('M d, Y') : 'N/A' }}
                                 </td>
                                 <td class="px-6 py-4 text-sm text-[#4A5568]">
-                                    {{ $subscription->end_date->format('M d, Y') }}
+                                    {{ $subscription->ends_at ? $subscription->ends_at->format('M d, Y') : 'N/A' }}
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <a href="{{ route('admin.users.show', $subscription->user) }}" 

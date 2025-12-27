@@ -108,7 +108,7 @@
                                     <p class="text-2xl font-bold text-[#003366]">{{ auth()->user()->activeSubscription->plan->name }}</p>
                                     <p class="text-[#4A5568] mt-1">
                                         ${{ number_format(auth()->user()->activeSubscription->plan->price, 2) }} / 
-                                        {{ auth()->user()->activeSubscription->plan->billing_cycle }}
+                                        {{ auth()->user()->activeSubscription->plan->billing_period }}
                                     </p>
                                 </div>
                                 <span class="inline-flex px-4 py-2 text-sm font-medium rounded-full bg-green-100 text-green-800">
@@ -118,11 +118,23 @@
                             <div class="grid md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <p class="text-sm text-[#4A5568]">Start Date</p>
-                                    <p class="font-medium text-[#003366]">{{ auth()->user()->activeSubscription->start_date->format('M d, Y') }}</p>
+                                    <p class="font-medium text-[#003366]">
+                                        @if(auth()->user()->activeSubscription->started_at)
+                                            {{ \Carbon\Carbon::parse(auth()->user()->activeSubscription->started_at)->format('M d, Y') }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </p>
                                 </div>
                                 <div>
                                     <p class="text-sm text-[#4A5568]">Renewal Date</p>
-                                    <p class="font-medium text-[#003366]">{{ auth()->user()->activeSubscription->end_date->format('M d, Y') }}</p>
+                                    <p class="font-medium text-[#003366]">
+                                        @if(auth()->user()->activeSubscription->ends_at)
+                                            {{ \Carbon\Carbon::parse(auth()->user()->activeSubscription->ends_at)->format('M d, Y') }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                             <a href="{{ route('subscriptions.index') }}" 
