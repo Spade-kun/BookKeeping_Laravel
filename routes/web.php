@@ -13,6 +13,10 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TeamDashboardController;
 
 // Public routes
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -44,26 +48,29 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    
+    // Documents (accessible to users and team members)
+    Route::resource('documents', DocumentController::class);
+    Route::get('documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    
+    // Reports (accessible to users and team members)
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+    Route::get('reports/{report}/download', [ReportController::class, 'download'])->name('reports.download');
 });
 
 // User Dashboard routes
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // User Documents
-    Route::resource('documents', DocumentController::class);
-    Route::get('documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
-    
-    // User Reports (read-only)
-    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('reports/{report}', [ReportController::class, 'show'])->name('reports.show');
-    Route::get('reports/{report}/download', [ReportController::class, 'download'])->name('reports.download');
-    
     // User Subscriptions
     Route::get('subscriptions', [UserSubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::post('subscriptions/subscribe/{plan}', [UserSubscriptionController::class, 'subscribe'])->name('subscriptions.subscribe');
     Route::get('subscriptions/my-subscription', [UserSubscriptionController::class, 'show'])->name('subscriptions.show');
     Route::post('subscriptions/cancel', [UserSubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
+    
+    // User Support Thread
+    Route::get('support', [ThreadController::class, 'show'])->name('support.show');
 });
 
 // Admin Dashboard routes
@@ -93,8 +100,33 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         // Admin Subscriptions
         Route::resource('subscriptions', SubscriptionController::class);
         Route::post('subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
+        
+        // Admin Team Management
+        Route::resource('teams', TeamController::class);
+        Route::post('teams/{team}/assign-user', [TeamController::class, 'assignUser'])->name('teams.assign-user');
+        Route::delete('teams/{team}/remove-user/{user}', [TeamController::class, 'removeUser'])->name('teams.remove-user');
     });
     
+});
+
+// Team Dashboard routes
+Route::middleware(['auth', 'role:team'])->group(function () {
+    Route::get('/team/dashboard', [TeamDashboardController::class, 'index'])->name('team.dashboard');
+    Route::get('/team/assigned-users', [TeamDashboardController::class, 'assignedUsers'])->name('team.assigned-users');
+});
+
+// Messaging routes (accessible to all authenticated users)
+Route::middleware(['auth'])->group(function () {
+    Route::get('threads', [ThreadController::class, 'index'])->name('threads.index');
+    Route::get('threads/{thread}', [ThreadController::class, 'showThread'])->name('threads.show');
+    Route::patch('threads/{thread}/status', [ThreadController::class, 'updateStatus'])->name('threads.update-status');
+    Route::patch('threads/{thread}/reassign', [ThreadController::class, 'reassign'])->name('threads.reassign');
+    Route::patch('threads/{thread}/assign-team', [ThreadController::class, 'assignTeam'])->name('threads.assign-team');
+    
+    // Messages
+    Route::post('threads/{thread}/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::get('messages/{message}/download', [MessageController::class, 'downloadAttachment'])->name('messages.download');
+    Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 });
 
 

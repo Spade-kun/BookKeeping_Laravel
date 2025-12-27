@@ -6,6 +6,8 @@
 @section('sidebar')
     @if(auth()->user()->isAdmin())
         @include('partials.admin-sidebar')
+    @elseif(auth()->user()->isTeam())
+        @include('partials.team-sidebar')
     @else
         @include('partials.user-sidebar')
     @endif

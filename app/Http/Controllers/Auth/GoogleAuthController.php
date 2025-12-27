@@ -55,7 +55,14 @@ class GoogleAuthController extends Controller
             Auth::login($user, true);
 
             // Redirect based on role
-            $route = $user->isAdmin() ? route('admin.dashboard') : route('dashboard');
+            if ($user->isAdmin()) {
+                $route = route('admin.dashboard');
+            } elseif ($user->isTeam()) {
+                $route = route('team.dashboard');
+            } else {
+                $route = route('dashboard');
+            }
+            
             return redirect($route)->with('success', 'Successfully signed in with Google!');
 
         } catch (\Exception $e) {
@@ -89,7 +96,15 @@ class GoogleAuthController extends Controller
             
             $user = Auth::user();
             
-            return redirect()->intended($user->isAdmin() ? route('admin.dashboard') : route('dashboard'))
+            if ($user->isAdmin()) {
+                $route = route('admin.dashboard');
+            } elseif ($user->isTeam()) {
+                $route = route('team.dashboard');
+            } else {
+                $route = route('dashboard');
+            }
+            
+            return redirect()->intended($route)
                 ->with('success', 'Welcome back, ' . $user->name . '!');
         }
 

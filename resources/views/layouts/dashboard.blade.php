@@ -38,22 +38,22 @@
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <aside class="hidden md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-64 bg-[#002147] text-white">
-                <!-- Logo -->
-                <div class="flex items-center justify-center h-20 border-b border-blue-900">
+            <div class="flex flex-col w-64 bg-[#002147] text-white h-screen">
+                <!-- Logo (Fixed) -->
+                <div class="flex items-center justify-center h-20 border-b border-blue-900 flex-shrink-0">
                     <a href="{{ route('home') }}" class="flex items-center">
                         <img src="{{ asset('images/EverlyLogo.jpeg') }}" alt="Everly Bookkeeping" class="w-10 h-10 rounded-full object-cover">
                         <span class="ml-3 text-lg font-bold text-white">Everly Bookkeeping</span>
                     </a>
                 </div>
 
-                <!-- Navigation -->
-                <nav class="flex-1 px-4 py-6 space-y-2">
+                <!-- Navigation (Scrollable) -->
+                <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-900 scrollbar-track-transparent">
                     @yield('sidebar')
                 </nav>
 
-                <!-- User Info -->
-                <div class="border-t border-blue-900 p-4">
+                <!-- User Info (Fixed) -->
+                <div class="border-t border-blue-900 p-4 flex-shrink-0">
                     <div class="flex items-center">
                         @if(auth()->user()->avatar)
                             <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-10 h-10 rounded-full object-cover">

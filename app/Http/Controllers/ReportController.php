@@ -18,6 +18,12 @@ class ReportController extends Controller
     {
         $user = auth()->user();
         
+        // Team members should view reports through assigned users page
+        if ($user->isTeam()) {
+            return redirect()->route('team.assigned-users')
+                ->with('info', 'View user reports through the Assigned Users page.');
+        }
+        
         if ($user->isAdmin()) {
             $userId = $request->get('user');
             

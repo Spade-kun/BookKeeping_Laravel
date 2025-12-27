@@ -12,6 +12,11 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         
+        // Redirect team members to team dashboard
+        if ($user->isTeam()) {
+            return redirect()->route('team.dashboard');
+        }
+        
         $stats = [
             'documents' => Document::where('user_id', $user->id)->count(),
             'reports' => Report::where('user_id', $user->id)->count(),

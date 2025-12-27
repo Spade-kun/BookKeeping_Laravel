@@ -17,6 +17,74 @@ class DocumentController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
+        
+        // Team members view documents of their assigned users
+        if ($user->isTeam()) {
+            $team = $user->primaryTeam();
+            
+            if (!$team) {
+                return view('documents.team-index', [
+                    'documents' => collect(),
+                    'team' => null,
+                    'users' => collect(),
+                ]);
+            }
+            
+            // Get all users assigned to this team
+            $assignedUserIds = \App\Models\User::whereHas('thread', function ($query) use ($team) {
+                $query->where('team_id', $team->id);
+            })->pluck('id');
+            
+            $year = $request->get('year');
+            $type = $request->get('type');
+            $userId = $request->get('user');
+            $search = $request->get('search');
+            
+            $query = \App\Models\Document::with(['user', 'uploader'])
+                ->whereIn('user_id', $assignedUserIds);
+            
+            // Filter by user
+            if ($userId) {
+                $query->where('user_id', $userId);
+            }
+            
+            // Filter by year
+            if ($year) {
+                $query->where('year', $year);
+            }
+            
+            // Filter by type
+            if ($type) {
+                $query->where('type', $type);
+            }
+            
+            // Search
+            if ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('file_name', 'like', '%' . $search . '%')
+                      ->orWhere('description', 'like', '%' . $search . '%');
+                });
+            }
+            
+            $documents = $query->latest()->paginate(15);
+            
+            // Get available years and types
+            $availableYears = \App\Models\Document::whereIn('user_id', $assignedUserIds)
+                ->distinct()
+                ->pluck('year')
+                ->sort()
+                ->reverse();
+            $years = $availableYears->isNotEmpty() ? $availableYears->values()->all() : [date('Y')];
+            $types = ['Receipts', 'Invoices', 'Bank Statements', 'Payroll', 'Reports', 'Other'];
+            
+            // Get users with documents
+            $users = \App\Models\User::whereIn('id', $assignedUserIds)
+                ->whereHas('documents')
+                ->get();
+            
+            return view('documents.team-index', compact('documents', 'team', 'users', 'years', 'types', 'year', 'type', 'userId'));
+        }
+        
         $year = $request->get('year');
         $type = $request->get('type');
         $search = $request->get('search');

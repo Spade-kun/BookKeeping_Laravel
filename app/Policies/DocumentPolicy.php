@@ -20,7 +20,28 @@ class DocumentPolicy
      */
     public function view(User $user, Document $document): bool
     {
-        return $user->isAdmin() || $user->id === $document->user_id;
+        // Admins can view all documents
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        // Users can view their own documents
+        if ($user->id === $document->user_id) {
+            return true;
+        }
+
+        // Team members can view documents of users assigned to their team
+        if ($user->isTeam()) {
+            $team = $user->primaryTeam();
+            if ($team) {
+                $documentOwner = $document->user;
+                if ($documentOwner->thread && $documentOwner->thread->team_id === $team->id) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

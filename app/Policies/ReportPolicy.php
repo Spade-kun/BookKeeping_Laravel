@@ -20,7 +20,28 @@ class ReportPolicy
      */
     public function view(User $user, Report $report): bool
     {
-        return $user->isAdmin() || $user->id === $report->user_id;
+        // Admins can view all reports
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        // Users can view their own reports
+        if ($user->id === $report->user_id) {
+            return true;
+        }
+
+        // Team members can view reports of users assigned to their team
+        if ($user->isTeam()) {
+            $team = $user->primaryTeam();
+            if ($team) {
+                $reportOwner = $report->user;
+                if ($reportOwner->thread && $reportOwner->thread->team_id === $team->id) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

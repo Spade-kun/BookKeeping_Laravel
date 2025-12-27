@@ -89,13 +89,16 @@
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0066CC] focus:border-transparent @error('role') border-red-500 @enderror">
                     <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
+                    <option value="team" {{ $user->role == 'team' ? 'selected' : '' }}>Team</option>
                     <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
                 @error('role')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
                 <p class="text-sm text-[#4A5568] mt-1">
-                    Admins have full access to manage users, plans, and all bookkeeping data
+                    <strong>User:</strong> Can upload documents and message team<br>
+                    <strong>Team:</strong> Can view assigned users and respond to messages<br>
+                    <strong>Admin:</strong> Full access to manage users, teams, plans, and all data
                 </p>
             </div>
 

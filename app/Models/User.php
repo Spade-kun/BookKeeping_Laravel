@@ -58,6 +58,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is team member
+     */
+    public function isTeam(): bool
+    {
+        return $this->role === 'team';
+    }
+
+    /**
      * Check if user is regular user
      */
     public function isUser(): bool
@@ -128,5 +136,48 @@ class User extends Authenticatable
     public function hasPassword(): bool
     {
         return !empty($this->password);
+    }
+
+    /**
+     * Get the team that the user belongs to.
+     */
+    public function team()
+    {
+        return $this->belongsToMany(Team::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get the user's primary team (if any).
+     */
+    public function primaryTeam()
+    {
+        return $this->team()->first();
+    }
+
+    /**
+     * Check if user is a team lead.
+     */
+    public function isTeamLead(): bool
+    {
+        $team = $this->team()->first();
+        return $team && $team->pivot->role === 'lead';
+    }
+
+    /**
+     * Get the user's support thread.
+     */
+    public function thread()
+    {
+        return $this->hasOne(Thread::class);
+    }
+
+    /**
+     * Get messages sent by the user.
+     */
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
     }
 }
